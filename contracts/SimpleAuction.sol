@@ -1,4 +1,4 @@
-pragma solidity ^0.4.21;
+pragma solidity 0.4.22;
 
 contract SimpleAuction {
     // Parameters of the auction. Times are either
@@ -29,7 +29,7 @@ contract SimpleAuction {
     /// Create a simple auction with `_biddingTime`
     /// seconds bidding time on behalf of the
     /// beneficiary address `_beneficiary`.
-    function SimpleAuction(
+    constructor(
         uint _biddingTime,
         address _beneficiary
     ) public {
