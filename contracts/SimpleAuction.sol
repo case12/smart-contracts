@@ -5,7 +5,7 @@ contract SimpleAuction {
     // absolute unix timestamps (seconds since 1970-01-01)
     // or time periods in seconds.
     address public beneficiary;
-    uint public auctionEnd;
+    uint public auctionEndTime;
 
     // Current state of the auction.
     address public highestBidder;
@@ -34,7 +34,7 @@ contract SimpleAuction {
         address _beneficiary
     ) public {
         beneficiary = _beneficiary;
-        auctionEnd = now + _biddingTime;
+        auctionEndTime = now + _biddingTime;
     }
 
     /// Bid on the auction with the value sent
@@ -50,7 +50,7 @@ contract SimpleAuction {
 
         // Revert the call if the bidding
         // period is over.
-        require(now <= auctionEnd);
+        require(now <= auctionEndTime);
 
         // If the bid is not higher, send the
         // money back.
@@ -89,7 +89,7 @@ contract SimpleAuction {
 
     /// End the auction and send the highest bid
     /// to the beneficiary.
-    function auctionEnd() public {
+    function endAuction() public {
         // It is a good guideline to structure functions that interact
         // with other contracts (i.e. they call functions or send Ether)
         // into three phases:
@@ -104,7 +104,7 @@ contract SimpleAuction {
         // external contracts.
 
         // 1. Conditions
-        require(now >= auctionEnd); // auction did not yet end
+        require(now >= auctionEndTime); // auction did not yet end
         require(!ended); // this function has already been called
 
         // 2. Effects
